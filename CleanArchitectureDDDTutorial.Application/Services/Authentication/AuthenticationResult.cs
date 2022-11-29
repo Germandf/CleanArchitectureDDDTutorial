@@ -1,8 +1,7 @@
-﻿namespace CleanArchitectureDDDTutorial.Application.Services.Authentication;
+﻿using CleanArchitectureDDDTutorial.Domain.Entities;
+
+namespace CleanArchitectureDDDTutorial.Application.Services.Authentication;
 
 public record AuthenticationResult(
-    Guid Id,
-    string FirstName,
-    string LastName,
-    string Email,
+    User User,
     string Token);

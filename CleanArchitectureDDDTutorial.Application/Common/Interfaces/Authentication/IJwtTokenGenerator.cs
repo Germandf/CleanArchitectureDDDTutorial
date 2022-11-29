@@ -1,6 +1,8 @@
-﻿namespace CleanArchitectureDDDTutorial.Application.Common.Interfaces.Authentication;
+﻿using CleanArchitectureDDDTutorial.Domain.Entities;
+
+namespace CleanArchitectureDDDTutorial.Application.Common.Interfaces.Authentication;
 
 public interface IJwtTokenGenerator
 {
-    string GenerateToken(Guid userId, string firstName, string lastName);
+    string GenerateToken(User user);
 }

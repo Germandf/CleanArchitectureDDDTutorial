@@ -1,6 +1,8 @@
 ﻿using CleanArchitectureDDDTutorial.Application.Common.Interfaces.Authentication;
+using CleanArchitectureDDDTutorial.Application.Common.Interfaces.Persistence;
 using CleanArchitectureDDDTutorial.Application.Common.Interfaces.Services;
 using CleanArchitectureDDDTutorial.Infrastructure.Authentication;
+using CleanArchitectureDDDTutorial.Infrastructure.Persistence;
 using CleanArchitectureDDDTutorial.Infrastructure.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +16,7 @@ public static class DependencyInjection
         services.Configure<JwtSettings>(configuration.GetSection(nameof(JwtSettings)));
         services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
+        services.AddScoped<IUserRepository, UserRepository>();
         return services;
     }
 }
