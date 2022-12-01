@@ -1,4 +1,5 @@
-﻿using CleanArchitectureDDDTutorial.Application.Services.Authentication;
+﻿using CleanArchitectureDDDTutorial.Api.Filters;
+using CleanArchitectureDDDTutorial.Application.Services.Authentication;
 using CleanArchitectureDDDTutorial.Contracts.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
