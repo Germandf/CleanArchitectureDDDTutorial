@@ -1,15 +1,13 @@
-using CleanArchitectureDDDTutorial.Api.Common.Errors;
+using CleanArchitectureDDDTutorial.Api;
 using CleanArchitectureDDDTutorial.Application;
 using CleanArchitectureDDDTutorial.Infrastructure;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddApplication().AddInfrastructure(builder.Configuration);
-builder.Services.AddControllers();
-builder.Services.AddSingleton<ProblemDetailsFactory, CustomProblemDetailsFactory>();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services
+    .AddPresentation()
+    .AddApplication()
+    .AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 
