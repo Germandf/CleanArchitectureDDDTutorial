@@ -1,11 +1,13 @@
-﻿using Microsoft.AspNetCore.Diagnostics;
+﻿using CleanArchitectureDDDTutorial.Api.Common.Http;
+using ErrorOr;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Options;
 using System.Diagnostics;
 
-namespace CleanArchitectureDDDTutorial.Api.Errors;
+namespace CleanArchitectureDDDTutorial.Api.Common.Errors;
 
 public class CustomProblemDetailsFactory : ProblemDetailsFactory
 {
@@ -54,9 +56,7 @@ public class CustomProblemDetailsFactory : ProblemDetailsFactory
         string? instance = null)
     {
         if (modelStateDictionary == null)
-        {
             throw new ArgumentNullException(nameof(modelStateDictionary));
-        }
 
         statusCode ??= 400;
 
@@ -69,10 +69,8 @@ public class CustomProblemDetailsFactory : ProblemDetailsFactory
         };
 
         if (title != null)
-        {
             // For validation problem details, don't overwrite the default title with null.
             problemDetails.Title = title;
-        }
 
         ApplyProblemDetailsDefaults(httpContext, problemDetails, statusCode.Value);
 
@@ -91,12 +89,13 @@ public class CustomProblemDetailsFactory : ProblemDetailsFactory
 
         var traceId = Activity.Current?.Id ?? httpContext?.TraceIdentifier;
         if (traceId != null)
-        {
             problemDetails.Extensions["traceId"] = traceId;
-        }
 
         _configure?.Invoke(new() { HttpContext = httpContext!, ProblemDetails = problemDetails });
 
-        problemDetails.Extensions.Add("customProperty", "customValue");
+        var errors = httpContext?.Items[HttpContextItemKeys.Errors] as List<Error>;
+
+        if (errors is not null)
+            problemDetails.Extensions.Add("errorCodes", errors.Select(x => x.Code));
     }
 }

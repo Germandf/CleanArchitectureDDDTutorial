@@ -1,13 +1,11 @@
-﻿using CleanArchitectureDDDTutorial.Api.Filters;
-using CleanArchitectureDDDTutorial.Application.Services.Authentication;
+﻿using CleanArchitectureDDDTutorial.Application.Services.Authentication;
 using CleanArchitectureDDDTutorial.Contracts.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArchitectureDDDTutorial.Api.Controllers;
 
-[ApiController]
 [Route("auth")]
-public class AuthenticationController : ControllerBase
+public class AuthenticationController : ApiController
 {
     private readonly IAuthenticationService _authenticationService;
 
@@ -25,14 +23,9 @@ public class AuthenticationController : ControllerBase
             request.Email, 
             request.Password);
 
-        var response = new AuthenticationResponse(
-            authResult.User.Id, 
-            authResult.User.FirstName, 
-            authResult.User.LastName, 
-            authResult.User.Email, 
-            authResult.Token);
-
-        return Ok(response);
+        return authResult.Match(
+            authResult => Ok(MapAuthResult(authResult)),
+            errors => Problem(errors));
     }
 
     [HttpPost("login")]
@@ -42,13 +35,18 @@ public class AuthenticationController : ControllerBase
             request.Email,
             request.Password);
 
-        var response = new AuthenticationResponse(
-            authResult.User.Id,
-            authResult.User.FirstName,
-            authResult.User.LastName,
-            authResult.User.Email,
-            authResult.Token);
+        return authResult.Match(
+            authResult => Ok(MapAuthResult(authResult)),
+            errors => Problem(errors));
+    }
 
-        return Ok(response);
+    private static AuthenticationResponse MapAuthResult(AuthenticationResult authResult)
+    {
+        return new AuthenticationResponse(
+                        authResult.User.Id,
+                        authResult.User.FirstName,
+                        authResult.User.LastName,
+                        authResult.User.Email,
+                        authResult.Token);
     }
 }
