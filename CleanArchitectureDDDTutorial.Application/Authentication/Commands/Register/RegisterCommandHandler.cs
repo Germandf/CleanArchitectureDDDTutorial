@@ -1,4 +1,4 @@
-﻿using CleanArchitectureDDDTutorial.Application.Authentication.Commands.Common;
+﻿using CleanArchitectureDDDTutorial.Application.Authentication.Common;
 using CleanArchitectureDDDTutorial.Application.Common.Interfaces.Authentication;
 using CleanArchitectureDDDTutorial.Application.Common.Interfaces.Persistence;
 using CleanArchitectureDDDTutorial.Domain.Common.Errors;

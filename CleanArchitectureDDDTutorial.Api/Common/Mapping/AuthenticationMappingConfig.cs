@@ -1,5 +1,5 @@
-﻿using CleanArchitectureDDDTutorial.Application.Authentication.Commands.Common;
-using CleanArchitectureDDDTutorial.Application.Authentication.Commands.Register;
+﻿using CleanArchitectureDDDTutorial.Application.Authentication.Commands.Register;
+using CleanArchitectureDDDTutorial.Application.Authentication.Common;
 using CleanArchitectureDDDTutorial.Application.Authentication.Queries.Login;
 using CleanArchitectureDDDTutorial.Contracts.Authentication;
 using Mapster;

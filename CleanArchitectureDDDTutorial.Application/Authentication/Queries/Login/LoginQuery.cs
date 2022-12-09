@@ -1,4 +1,4 @@
-﻿using CleanArchitectureDDDTutorial.Application.Authentication.Commands.Common;
+﻿using CleanArchitectureDDDTutorial.Application.Authentication.Common;
 using ErrorOr;
 using MediatR;
 
